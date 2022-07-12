@@ -1,0 +1,95 @@
+webpak nots
+1.creat dist folder and index.html file
+2.creat src folder and index.js file
+3.command=  npm init -y
+4.  ""=  npm i -d webpak webpak-cli
+5. package.json open - add=   "build":"webpack --mode production"
+
+6. command=  npm run build
+7.create in dist file otomatic= main.js file
+8.main.js file canect the index.html file in src folder
+9. now write in package.json file=   "build":"webpack"
+10.create = webpack.config.js file and add = 
+module.exports={
+    mode: 'development'
+}
+11.add entry file =  entry:path.resolve(__dirname , 'src/index.js'),
+12. and requer path in top = const path = require('path');
+13.add output file path = 
+output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  14.delete in dist main.js file
+  15. command = npm run build
+  16. edit in dist index.html file add = bundle.js file
+
+     //css /scss loader add
+  17. css/sass loader install =
+       npm i -d style-loader css-loader sass-loader
+  18.  add webpack.config.js file =
+  module:{
+    rules:[
+        {
+          test: /\.scss$/,
+          use:[
+            { loader: 'style-loader' },
+            { loader: 'css-loader',},
+            { loader: 'sass-loader' }
+          ],
+        },
+    ]
+  } 
+  19. html plagin install
+      npm install --save-dev html-webpack-plugin
+       and add config file in top
+       const HtmlWebpackPlugin = require('html-webpack-plugin'); and add bottom
+       Plugins:[
+        new HtmlWebpackPlugin({
+            title:'webpack app',
+            filename:'index.html',
+            template: 'src/test.html',
+        }),
+     ],
+     20. now creat server
+        add package.json file =  "dev": "webpack serve" under build option
+         and config file add
+         
+         devtool:'source-map',
+         devServer: {
+           static: {
+             directory: path.join(__dirname, 'dist'),
+           },
+           compress: true,
+           port: 9000,
+           open:true,
+           hot:true,
+           historyApiFallback:true
+         },
+         
+         
+         run = npm run dev
+21.babol loder install
+npm install -D babel-loader @babel/core @babel/preset-env webpack
+add in modules
+{
+  test: /\.m?js$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env']
+    }
+  }
+}
+=npm run build
+22.create folder assets for img
+    set img 
+    import img in index.js file in sec folder
+    then->config file-> babul loder ->add
+    {
+      test:/\.(png|jpg|jpeg|svg|gif)$/i,
+      type:'asset/resource' //folder name
+    }
+    and->output-> add
+        assetModuleFilename:'[name][ext]'
